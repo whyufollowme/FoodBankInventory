@@ -1,13 +1,24 @@
 import sqlite3
 from pathlib import Path
+import os
 
 
 # ============================================================
-# PROJECT DIRECTORIES
+# APPLICATION DATA DIRECTORY
 # ============================================================
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = PROJECT_ROOT / "data"
+# Store writable application data in the user's AppData folder.
+# This works correctly when running normally and when packaged
+# with PyInstaller.
+
+APP_DATA_DIR = Path(
+    os.environ.get("LOCALAPPDATA", Path.home())
+) / "Food Bank"
+
+DATA_DIR = APP_DATA_DIR / "data"
+
+# Make sure the data directory exists
+DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 # Database location
 DATABASE_PATH = DATA_DIR / "foodbank.db"
@@ -19,8 +30,6 @@ DATABASE_PATH = DATA_DIR / "foodbank.db"
 
 def get_connection():
     """Create and return a connection to the database."""
-
-    DATA_DIR.mkdir(exist_ok=True)
 
     connection = sqlite3.connect(DATABASE_PATH)
 
