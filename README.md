@@ -1,5 +1,6 @@
-# FoodBankInventory
 # Food Bank Management System
+
+VERSION 1.3.0 RELEASED!!!
 
 A simple desktop application for managing food bank clients, inventory, donations, distributions, and activity.
 
